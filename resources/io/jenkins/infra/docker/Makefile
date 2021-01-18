@@ -20,13 +20,13 @@ all: clean lint build test ## Execute the complete process except the "deploy" s
 
 lint: ## Lint the $(DOCKERFILE) content
 	@echo "== Linting $(PWD)/$(DOCKERFILE)..."
-	@hadolint --format=json $(PWD)/$(DOCKERFILE) > $(PWD)/hadolint.json
 	@echo "Writing Lint results to $(PWD)/hadolint.json"
+	hadolint --format=json $(PWD)/$(DOCKERFILE) > $(PWD)/hadolint.json
 	@echo "== Lint ✅ Succeeded"
 
 build: ## Build the Docker Image $(IMAGE_NAME) from $(DOCKERFILE) and export it to $(IMAGE_ARCHIVE)
 	@echo "== Building $(IMAGE_NAME) from $(PWD)/$(DOCKERFILE)..."
-	@$(CONTAINER_BIN) build \
+	$(CONTAINER_BIN) build \
 		-t $(IMAGE_NAME) \
 		--build-arg "GIT_COMMIT_REV=$(GIT_COMMIT_REV)" \
 		--build-arg "GIT_SCM_URL=$(GIT_SCM_URL)" \
@@ -41,18 +41,18 @@ build: ## Build the Docker Image $(IMAGE_NAME) from $(DOCKERFILE) and export it 
 		--label "org.label-schema.build-date=$(BUILD_DATE)" \
 		-f $(PWD)/$(DOCKERFILE) \
 		./
-	@$(CONTAINER_BIN) save --output=$(IMAGE_ARCHIVE) $(IMAGE_NAME)
+	$(CONTAINER_BIN) save --output=$(IMAGE_ARCHIVE) $(IMAGE_NAME)
 	@echo "== Build ✅ Succeeded, image $(IMAGE_NAME) exported to $(IMAGE_ARCHIVE)."
 
 clean: ## Delete any file generated during the build steps
 	@echo "== Cleaning working directory from generated artefacts..."
-	@rm -f $(PWD)/*.tar $(PWD)/hadolint.json
+	rm -f $(PWD)/*.tar $(PWD)/hadolint.json
 	@echo "== Cleanup ✅ Succeeded"
 
 test: ## Execute the test harness on the Docker Image archive at $(IMAGE_ARCHIVE)
 	@echo "== Testing $(IMAGE_NAME) from $(IMAGE_ARCHIVE)..."
 	@echo "Writing test report to $(PWD)/cst-result.xml..."
-	@container-structure-test test --driver=tar --image=$(IMAGE_ARCHIVE) --config=$(PWD)/cst.yml
+	container-structure-test test --driver=tar --image=$(IMAGE_ARCHIVE) --config=$(PWD)/cst.yml
 	@echo "== Test ✅ Succeeded"
 
 ## This steps expects that you are logged to the Docker registry to push image into
