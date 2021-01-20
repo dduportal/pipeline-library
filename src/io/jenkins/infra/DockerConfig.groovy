@@ -1,6 +1,5 @@
 package io.jenkins.infra
 
-
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -19,7 +18,7 @@ class DockerConfig {
 
   def infraConfig
 
-  public DockerConfig(String imageName, Map config=[:], InfraConfig infraConfig) {
+  public DockerConfig(String imageName, InfraConfig infraConfig, Map config=[:]) {
     this.imageName = imageName
 
     this.infraConfig = infraConfig
