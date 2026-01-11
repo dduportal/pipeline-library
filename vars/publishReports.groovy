@@ -63,13 +63,9 @@ def call(List<String> files, Map params = [:]) {
           "PATTERN=${ basename ?: '*' }",
         ]) {
           sh '''
-          # Don't output sensitive information
-          set +x
-
           fileShareUrl="$(echo "${FILESHARE_SIGNED_URL}" | sed "s#/?#/${DESTINATION_PATH}?#")"
 
-          # Synchronize the File Share content
-          azcopy copy \
+          echo azcopy copy \
             --skip-version-check \
             --put-md5 `# File length us used by default which can lead to errors for tiny text files` \
             --content-type="${CONTENT_TYPE}" \
