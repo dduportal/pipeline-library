@@ -41,7 +41,7 @@ Object withContainerRegistry(String containerRegistry = '', Closure body) {
   // empty value means credential-less (aka. Azure workload identity)
   final Map containerRegistriesCredentials = [
     'infra.ci.jenkins.io': [
-      'index.docker.io': 'jenkinsciinfra-dockerhub-push',
+      'index.docker.io': 'jenkinsinfraadmin-dockerhub-push',
       'dockerhubmirror.azurecr.io': '',
     ],
     'trusted.ci.jenkins.io': [
