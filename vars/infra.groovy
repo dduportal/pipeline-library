@@ -45,7 +45,7 @@ Object withContainerRegistry(String containerRegistry = '', Closure body) {
       'dockerhubmirror.azurecr.io': '',
     ],
     'trusted.ci.jenkins.io': [
-      'index.docker.io': 'jenkinsinfraadmin-dockerhub-push',
+      'index.docker.io': 'jenkinsciinfra-dockerhub-push',
     ],
     'cert.ci.jenkins.io': [
       'dockerhubmirror.azurecr.io': 'azure-container-registry-push',
